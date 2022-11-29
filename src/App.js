@@ -1,46 +1,49 @@
 import './App.css';
 
-import { Routes, Route, BrowserRouter, useParams } from 'react-router-dom';
-import { React, useState } from "react"
+import { Routes, Route, BrowserRouter, useParams, Navigate } from 'react-router-dom';
+import { React, useState } from "react";
 import Nav from './Nav.js';
 import DogList from './DogList.js';
-import DogDetails from './DogDetails.js';
+// import DogDetails from './DogDetails.js';
 import getDogs from './getDogs';
+import FilterDogs from './FilterDogs';
 
 /**
  * Renders App component
- * TODO:STATE!!!
+ *
+ * - State: dogs (array of dogs)
+ * - Props: none
+ *
  * App -> BrowserRouter (is this right??)
  */
 function App() {
-  const [dogs, setDogs] = useState([])
-  if (dogs.length === 0) getData(); //TODO: Create a loading state with message
+  const [dogs, setDogs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const params = useParams()
-  console.log("params>>>>>>>>>>>>>>", params)
+  if (isLoading) getData();
 
+  /** Call API to get list of dogs */
   async function getData() {
     setDogs(await getDogs());
+    setIsLoading(false);
   }
-  
-  //some function here that recieves the click data
 
   return (
     <div className="App">
-      {dogs.length > 0 &&
+
+      {isLoading && <h1> Loading... </h1>}
+      {!isLoading &&
         <BrowserRouter>
           <Nav dogs={dogs.map(dog => dog.name)} />
           <Routes >
-            <Route element={<DogList dogs={dogs} onClick="cb"/>} path="/dogs" />
+            <Route element={<DogList dogs={dogs} />} path="/" />
             <Route
-              element={<DogDetails dogs={dogs} />}
+              element={<FilterDogs dogs={dogs} />}
               path="/dogs/:name"
-            //   <DogDetails
-            //     dog={dogs.filter(d => d.name === "Whiskey")[0]} />}
-            //TODO:non existing dog redirect somehow...
             />
+            <Route element={< Navigate to='/' />} path='*' />
           </Routes>
-      
+
         </BrowserRouter>
       }
     </div>

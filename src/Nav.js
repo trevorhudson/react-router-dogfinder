@@ -17,7 +17,7 @@ function Nav({ dogs }) {
         dog =>
           <NavLink
             key={dog}
-            to={`/dogs/${dog}`}
+            to={`/dogs/${dog.toLowerCase()}`}
           >{dog}
           </NavLink>)}
 
