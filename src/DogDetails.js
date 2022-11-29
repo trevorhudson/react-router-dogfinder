@@ -1,4 +1,4 @@
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 
 /**
  * Render a page containing the details of a given dog.
@@ -17,7 +17,7 @@ function DogDetails({ dog }) {
       <p>Name: {dog.name} Age: {dog.age}</p>
       <img src={`/${dog.src}.jpg`} alt={dog.name} />
       {dog.facts.map((fact, idx) => <p key={idx}>{fact}</p>)}
-      <NavLink to="/dogs">Back to all da good fluffers</NavLink>
+      <Link to="/dogs">Back to all da good fluffers</Link>
     </div>
   );
 }
