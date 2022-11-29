@@ -1,8 +1,8 @@
-import axios from "axios";
+const axios = require("axios");
 
 /**
  * Makes Ajax request to retrieve dogs info.
- * 
+ *
  * Returns an array like:
  *    [{name, age, src, facts:[fact1,...]},...]
  */
@@ -12,4 +12,4 @@ async function getDogs() {
   return resp.data;
 }
 
-export default getDogs;
+module.export = getDogs;
